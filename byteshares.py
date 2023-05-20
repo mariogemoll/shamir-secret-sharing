@@ -1,6 +1,5 @@
 import galois
 import numpy as np
-import random
 
 def create_shares(field, k: int, n: int, secret):
     assert(k < n)
@@ -19,22 +18,3 @@ def reconstruct_secret(field, shares):
     p = galois.lagrange_poly(xs, ys)
     # The secret is the evaluation of the reconstructed polynomial at x=0
     return p(0)
-
-def test():
-    GF = galois.GF(2 ** 8)
-    secret = GF.Random()
-    print(f'Secret: {secret}')
-    
-    k = 3
-    n = 5
-    shares = create_shares(GF, 3, 5, secret)
-    
-    for (i, share) in shares:
-        print(f'Share {i}: {share}')
-    
-    subset = random.sample(shares, 3)
-    reconstructed_secret = reconstruct_secret(GF, subset)
-    assert(reconstructed_secret == secret)
-    print(f'Reconstructed secret: {reconstructed_secret}')
-
-test()
