@@ -8,6 +8,7 @@ Share = Tuple[int, int]
 
 
 def create_shares(k: int, n: int, secret: int) -> list[Share]:
+    """Creates n shares for byte secret such that k shares can be used to reconstruct it."""
     assert (1 <= k <= n < GF.order)
     assert (0 <= secret <= 255)
     # Select a random polynomial p of degree k-1 with p(0) = secret
@@ -19,6 +20,7 @@ def create_shares(k: int, n: int, secret: int) -> list[Share]:
 
 
 def reconstruct_secret(shares: list[Share]) -> int:
+    """Reconstructs the secret byte for a list of shares."""
     # Split up the points into lists of x and y coordinates and convert them into field elements
     xs, ys = map(GF, zip(*shares))
     # Reconstruct the polynomial using Lagrange interpolation

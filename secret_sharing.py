@@ -5,6 +5,7 @@ Share = Tuple[int, ByteString]
 
 
 def create_shares(k: int, n: int, secret: ByteString) -> list[Share]:
+    """Create n shares for byte string secret such that k shares can be used to reconstruct it."""
     assert (1 <= k <= n < 256)
     assert (len(secret) == 32)
     shares = {}
@@ -18,6 +19,7 @@ def create_shares(k: int, n: int, secret: ByteString) -> list[Share]:
 
 
 def reconstruct_secret(shares: list[Share]) -> ByteString:
+    """Reconstruct the secret byte string for a list of shares."""
     secret = bytearray()
     for i in range(32):
         shares_for_byte: list[byteshares.Share] = [(idx, val[i]) for (idx, val) in shares]
